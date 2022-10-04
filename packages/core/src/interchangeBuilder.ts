@@ -22,6 +22,7 @@ import * as fs from "fs";
 import { MessageHeader, Segment, toSegmentObject } from "./edifact";
 import { Separators } from "./edi/separators";
 import { APERAK, AUTHOR, BALANC, DESADV, GENRAL, IFTMIN, INVOIC, INVRPT, ORDERS, OSTENQ, OSTRPT, PARTIN, TAXCON, VATDEC } from "./index";
+import {findDefaultMessageSpec} from "./findMessageSpec";
 
 export class Group {
     name: string;
@@ -478,39 +479,7 @@ export class InterchangeBuilder {
             if (fs.existsSync(path)) {
                 return this.readFileAsMessageStructure(path);
             } else {
-                switch (messageType) {
-                    // default back to D01B messages
-                    case "APERAK":
-                        return APERAK;
-                    case "AUTHOR":
-                        return AUTHOR;
-                    case "BALANC":
-                        return BALANC;
-                    case "DESADV":
-                        return DESADV;
-                    case "GENRAL":
-                        return GENRAL;
-                    case "IFTMIN":
-                        return IFTMIN;
-                    case "INVOIC":
-                        return INVOIC;
-                    case "INVRPT":
-                        return INVRPT;
-                    case "ORDERS":
-                        return ORDERS;
-                    case "OSTENQ":
-                        return OSTENQ;
-                    case "OSTRPT":
-                        return OSTRPT;
-                    case "PARTIN":
-                        return PARTIN;
-                    case "TAXCON":
-                        return TAXCON;
-                    case "VATDEC":
-                        return VATDEC;
-                    default:
-                        throw new Error(`Could not find message definiton for message type '${messageType}' of version '${messageVersion}'`);
-                }
+                return findDefaultMessageSpec(messageType);
             }
         }
     }

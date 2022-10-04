@@ -18,11 +18,9 @@
 
 // Run this sample with: npx ts-node examples/definitions.ts
 
-import { Reader, ResultType } from "../src/reader";
-import { Tracker, MessageType } from "../src/tracker";
-import * as path from "path";
-
+import {MessageType, Reader, ResultType, Tracker} from "@ts-edifact/core";
 import * as fs from "fs";
+import * as path from "path";
 
 let document: string = "";
 document += "UNB+UNOA:1+005435656:1+006415160:1+060515:1434+00000000000778'";
@@ -57,7 +55,7 @@ function _validateDocument(doc: string, callback?: (numChecked: number) => void)
     const result: ResultType[] = reader.parse(doc);
 
     let checked: number = 0;
-    const data: string = fs.readFileSync(path.resolve("./src/messageSpec/INVOIC.struct.json"), { encoding: "utf-8"});
+    const data: string = fs.readFileSync(path.resolve("./spec/INVOIC.struct.json"), { encoding: "utf-8"});
     const msgStruct: MessageType[] = JSON.parse(data) as MessageType[];
     const tracker: Tracker = new Tracker(msgStruct);
 

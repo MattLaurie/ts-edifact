@@ -372,7 +372,7 @@ export class ValidatorImpl implements Validator {
                 if (this.segment) {
                     name = this.segment.elements[this.counts.element];
                 } else {
-                    const error: Error | undefined = this.errors.missingSegmentStart(this.segment, this.throwOnMissingDefinitions);
+                    const error: Error | undefined = this.errors.missingSegmentStart(undefined, this.throwOnMissingDefinitions);
                     if (error) {
                         throw error;
                     } else {

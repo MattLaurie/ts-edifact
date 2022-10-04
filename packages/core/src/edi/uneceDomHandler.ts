@@ -17,7 +17,7 @@
  */
 
 import { DomHandler, DomHandlerOptions } from "htmlparser2";
-import { Node, Element } from "htmlparser2/node_modules/domhandler";
+import { Node, Element } from "domhandler";
 
 type Callback = (error: Error | null, dom: Node[]) => void;
 type ElementCallback = (element: Element) => void;

@@ -15,16 +15,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {
+    Edifact,
+    EdifactMessageSpecification, Group, InterchangeBuilder, LineItem, MonetaryAmount, PriceDetails, Quantity,
+    Reader,
+    ResultType,
+    Separators,
+    UNECEMessageStructureParser,
+    MessageStructureParser,
+    persist,
+    ItemDescription
+} from "@ts-edifact/core";
 
 
 // Run this sample with: npx ts-node examples/interchangeBuilderSample.ts
 
-import { Reader, ResultType } from "../src/reader";
-import { InterchangeBuilder, Edifact, Group } from "../src/interchangeBuilder";
-import { Separators } from "../src/edi/separators";
-import { MessageStructureParser, UNECEMessageStructureParser, EdifactMessageSpecification } from "../src/edi/messageStructureParser";
-import { persist } from "../src/util";
-import { ItemDescription, LineItem, Quantity, PriceDetails, MonetaryAmount } from "../src/edifact";
+// import { Reader, ResultType } from "../src/reader";
+// import { InterchangeBuilder, Edifact, Group } from "../src/interchangeBuilder";
+// import { Separators } from "../src/edi/separators";
+// import { MessageStructureParser, UNECEMessageStructureParser, EdifactMessageSpecification } from "../src/edi/messageStructureParser";
+// import { persist } from "../src/util";
+// import { ItemDescription, LineItem, Quantity, PriceDetails, MonetaryAmount } from "../src/edifact";
 
 let document: string = "";
 document += "UNB+UNOA:1+005435656:1+006415160:1+060515:1434+00000000000778'";
