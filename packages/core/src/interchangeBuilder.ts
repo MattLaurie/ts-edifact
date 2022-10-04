@@ -21,7 +21,6 @@ import { MessageType, Pointer } from "./tracker";
 import * as fs from "fs";
 import { MessageHeader, Segment, toSegmentObject } from "./edifact";
 import { Separators } from "./edi/separators";
-import { APERAK, AUTHOR, BALANC, DESADV, GENRAL, IFTMIN, INVOIC, INVRPT, ORDERS, OSTENQ, OSTRPT, PARTIN, TAXCON, VATDEC } from "./index";
 import {findDefaultMessageSpec} from "./findMessageSpec";
 
 export class Group {

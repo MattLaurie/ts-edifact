@@ -68,3 +68,5 @@ export { SegmentTableBuilder } from "./segments";
 export { ElementTableBuilder } from "./elements";
 
 export { persist } from './util';
+
+export { Suffix } from './tableBuilder';
