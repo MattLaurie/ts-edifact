@@ -29,11 +29,11 @@ describe("Cache", () => {
         it("should only contain the last insterted key", () => {
             cache.insert("a", "value");
             cache.insert("b", "value");
-            expect(cache.contains("a")).toBeFalse();
-            expect(cache.contains("b")).toBeTrue();
+            expect(cache.contains("a")).toBeFalsy();
+            expect(cache.contains("b")).toBeTruthy();
             cache.insert("c", "value");
-            expect(cache.contains("b")).toBeFalse();
-            expect(cache.contains("c")).toBeTrue();
+            expect(cache.contains("b")).toBeFalsy();
+            expect(cache.contains("c")).toBeTruthy();
         });
 
         it("should return propper length", () => {
@@ -52,15 +52,15 @@ describe("Cache", () => {
             cache.insert('b', 'value');
             cache.insert('c', 'value');
             cache.insert('d', 'value');
-            expect(cache.contains('a')).toBeFalse();
-            expect(cache.contains('b')).toBeTrue();
-            expect(cache.contains('c')).toBeTrue();
-            expect(cache.contains('d')).toBeTrue();
+            expect(cache.contains('a')).toBeFalsy();
+            expect(cache.contains('b')).toBeTruthy();
+            expect(cache.contains('c')).toBeTruthy();
+            expect(cache.contains('d')).toBeTruthy();
             cache.insert('e', 'value');
-            expect(cache.contains('b')).toBeFalse();
-            expect(cache.contains('c')).toBeTrue();
-            expect(cache.contains('d')).toBeTrue();
-            expect(cache.contains('e')).toBeTrue();
+            expect(cache.contains('b')).toBeFalsy();
+            expect(cache.contains('c')).toBeTruthy();
+            expect(cache.contains('d')).toBeTruthy();
+            expect(cache.contains('e')).toBeTruthy();
         });
 
         it("should keep two insertd keys after repeatedly inserting a third one", () => {
@@ -69,8 +69,8 @@ describe("Cache", () => {
             cache.insert('c', 'value');
             cache.insert('c', 'value');
             cache.insert('c', 'value');
-            expect(cache.contains('a')).toBeTrue();
-            expect(cache.contains('b')).toBeTrue();
+            expect(cache.contains('a')).toBeTruthy();
+            expect(cache.contains('b')).toBeTruthy();
         });
 
         it("should return propper length", () => {
@@ -91,7 +91,7 @@ describe("Cache", () => {
         });
 
         it("should contain this key", () => {
-            expect(cache.contains("key")).toBeTrue();
+            expect(cache.contains("key")).toBeTruthy();
         });
 
         it("should return the inserted value", () => {

@@ -100,9 +100,9 @@ describe("Validator", () => {
             const dict: Dictionary<ElementEntry> = new Dictionary<ElementEntry>();
             dict.add("A000", { requires: 0, components: ["a3", "an3", "n3"] });
             validator.define(dict);
-            const alphaHook: jasmine.Spy = spyOn(buffer, "alpha");
-            const alphanumericHook: jasmine.Spy = spyOn(buffer, "alphanumeric");
-            const numericHook: jasmine.Spy = spyOn(buffer, "numeric");
+            const alphaHook = jest.spyOn(buffer, "alpha");
+            const alphanumericHook = jest.spyOn(buffer, "alphanumeric");
+            const numericHook = jest.spyOn(buffer, "numeric");
 
             validator.onOpenSegment("AAA");
             validator.onElement();
