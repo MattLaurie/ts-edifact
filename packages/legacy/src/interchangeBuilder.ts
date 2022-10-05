@@ -17,10 +17,9 @@
  */
 
 import { ResultType } from "./reader";
-import { MessageType, Pointer } from "./tracker";
+import { MessageType, Pointer, Separators } from "@explorate-api/core";
 import * as fs from "fs";
 import { MessageHeader, Segment, toSegmentObject } from "./edifact";
-import { Separators } from "./edi/separators";
 import { APERAK, AUTHOR, BALANC, DESADV, GENRAL, IFTMIN, INVOIC, INVRPT, ORDERS, OSTENQ, OSTRPT, PARTIN, TAXCON, VATDEC } from "./index";
 
 export class Group {

@@ -21,7 +21,7 @@
 
 import * as fs from "fs";
 import { Suffix } from "./tableBuilder";
-import { EdifactMessageSpecification, MessageStructureParser, UNECEMessageStructureParser } from "./edi/messageStructureParser";
+import { EdifactMessageSpecification, MessageStructureParser, UNECEMessageStructureParser } from "../../core/src/edi/messageStructureParser";
 
 export function isDefined<T>(value: T | undefined | null): value is T {
     return <T>value !== undefined && <T>value !== null;

@@ -16,9 +16,9 @@
  * limitations under the License.
  */
 
-import { ResultType } from "../src/reader";
-import { InterchangeBuilder, Edifact, Group } from "../src/interchangeBuilder";
-import { Separators, EdifactSeparatorsBuilder } from "../src/edi/separators";
+import { ResultType } from "../../core/src/reader";
+import { InterchangeBuilder, Edifact, Group } from "../../core/src/interchangeBuilder";
+import { Separators, EdifactSeparatorsBuilder } from "../../core/src/edi/separators";
 
 describe("InterchangeBuilder", () => {
     let parseResult: ResultType[];

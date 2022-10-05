@@ -16,15 +16,15 @@
  * limitations under the License.
  */
 
-import { Parser } from "./parser";
-import { Validator, Dictionary, SegmentEntry, ElementEntry, ValidatorImpl } from "./validator";
+import { Parser } from "../../core/src/parser";
+import { Validator, Dictionary, SegmentEntry, ElementEntry, ValidatorImpl } from "../../core/src/validator";
 
 import { SegmentTableBuilder } from "./segments";
 import { ElementTableBuilder} from "./elements";
-import { Separators } from "./edi/separators";
+import { Separators } from "../../core/src/edi/separators";
 import { isDefined } from "./util";
-import { Cache } from "./cache";
-import { Configuration } from "./configuration";
+import { Cache } from "../../core/src/cache";
+import { Configuration } from "../../core/src/configuration";
 
 export type ResultType = {
     name: string;

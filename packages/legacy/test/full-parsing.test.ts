@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-import { Dictionary, SegmentEntry, ElementEntry } from "../src/validator";
-import { Parser } from "../src/parser";
+import { Dictionary, SegmentEntry, ElementEntry } from "../../core/src/validator";
+import { Parser } from "../../core/src/parser";
 import { SegmentTableBuilder } from "../src/segments";
 import { ElementTableBuilder } from "../src/elements";
-import { Configuration } from "../src/configuration";
+import { Configuration } from "../../core/src/configuration";
 
 // issue #1 - Differences between ts-edifact and edifact libraries
 describe("Parsing edifact document", () => {
