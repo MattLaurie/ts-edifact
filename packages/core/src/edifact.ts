@@ -27,6 +27,35 @@ export interface Segment {
     tag: string;
 }
 
+// CST+LINE NUMBER+LINE ACTION CODE::95'
+
+type CustomsIdentityCodes = {
+    lineActionCode: string;
+    codeListIdentificationCode?: string;
+    codeListResponsibleAgencyCode?: string;
+}
+
+export class CustomsStatusOfGoods implements Segment {
+    tag = 'CST';
+
+    goodsItemNumber: number;
+    customsIdentityCodes: CustomsIdentityCodes[] = [];
+
+    constructor(data: ResultType) {
+        this.goodsItemNumber = parseInt(data.elements[0][0]);
+        if (data.elements.length > 1) {
+            for (let i = 1; i < data.elements.length; i++) {
+                const value = data.elements[i];
+                this.customsIdentityCodes.push({
+                    lineActionCode: value[0],
+                    codeListIdentificationCode: value.length > 1 ? value[1] : undefined,
+                    codeListResponsibleAgencyCode: value.length > 2 ? value[2] : undefined
+                })
+            }
+        }
+    }
+}
+
 export function toSegmentObject(data: ResultType, version: string, decimalSeparator: string): Segment {
     switch (data.name) {
         case "AJT":
@@ -57,6 +86,8 @@ export function toSegmentObject(data: ResultType, version: string, decimalSepara
             return new ComponentDetails(data);
         case "COM":
             return new CommunicationContact(data);
+        case "CST":
+            return new CustomsStatusOfGoods(data);
         case "CPS":
             return new ConsignmentPackingSequence(data);
         case "CTA":

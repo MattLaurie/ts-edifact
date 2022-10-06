@@ -17,10 +17,10 @@
  */
 
 import * as fs from "fs";
+import * as path from "path";
 import { ResultType, MessageType, Pointer, MessageHeader, Segment, toSegmentObject, Separators } from "@ts-edifact/core";
 
 // default D01B message specifications
-
 import * as APERAK from "./messageSpec/APERAK.struct.json";
 import * as AUTHOR from "./messageSpec/AUTHOR.struct.json";
 import * as BALANC from "./messageSpec/BALANC.struct.json";
@@ -483,13 +483,13 @@ export class InterchangeBuilder {
     }
 
     private getMessageStructureDefForMessage(basePath: string, messageVersion: string, messageType: string): MessageType[] {
-        let path: string = basePath + messageVersion + "_" + messageType + ".struct.json";
-        if (fs.existsSync(path)) {
-            return this.readFileAsMessageStructure(path);
+        let file = path.resolve(basePath, messageVersion + "_" + messageType + ".struct.json");
+        if (fs.existsSync(file)) {
+            return this.readFileAsMessageStructure(file);
         } else {
-            path = basePath + messageType + "struct.json";
-            if (fs.existsSync(path)) {
-                return this.readFileAsMessageStructure(path);
+            file = path.resolve(basePath, messageType + "struct.json");
+            if (fs.existsSync(file)) {
+                return this.readFileAsMessageStructure(file);
             } else {
                 switch (messageType) {
                     // default back to D01B messages

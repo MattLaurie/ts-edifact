@@ -16,13 +16,9 @@
  * limitations under the License.
  */
 
-// Run this sample with: npx ts-node examples/definitions.ts
-
-import { Reader, ResultType } from "../src/reader";
-import { Tracker, MessageType } from "../src/tracker";
 import * as path from "path";
-
 import * as fs from "fs";
+import { Reader, ResultType, Tracker, MessageType } from "@ts-edifact/core";
 
 let document: string = "";
 document += "UNB+UNOA:1+005435656:1+006415160:1+060515:1434+00000000000778'";
@@ -52,12 +48,14 @@ document += "MOA+8:525'";
 document += "UNT+23+00000000000117'";
 document += "UNZ+1+00000000000778'";
 
+const MESSAGE_SPEC_DIR = path.resolve('data');
+
 function _validateDocument(doc: string, callback?: (numChecked: number) => void): number | undefined {
-    const reader: Reader = new Reader();
+    const reader: Reader = new Reader(MESSAGE_SPEC_DIR);
     const result: ResultType[] = reader.parse(doc);
 
     let checked: number = 0;
-    const data: string = fs.readFileSync(path.resolve("./src/messageSpec/INVOIC.struct.json"), { encoding: "utf-8"});
+    const data: string = fs.readFileSync(path.resolve(MESSAGE_SPEC_DIR, 'INVOIC.struct.json'), { encoding: "utf-8"});
     const msgStruct: MessageType[] = JSON.parse(data) as MessageType[];
     const tracker: Tracker = new Tracker(msgStruct);
 

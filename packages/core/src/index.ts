@@ -47,6 +47,7 @@ export {
     MonetaryAmount,
     MessageHeader,
     toSegmentObject,
+    ItemDescription
 } from "./edifact";
 
 export { SegmentTableBuilder } from "./segments";

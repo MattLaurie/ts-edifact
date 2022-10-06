@@ -11,5 +11,6 @@ export {
 
 export {
     EdifactMessageSpecification,
-    UNECEMessageStructureParser
+    UNECEMessageStructureParser,
+    MessageStructureParser
 } from "./edi/messageStructureParser";
