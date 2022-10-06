@@ -157,12 +157,12 @@ describe('UNECELegacyMessageStructureParser', () => {
             const segmentNames: string[] = sut.parseStructurePage(D99A_INVOIC_STRUCTURE_PAGE, spec);
 
             expect(segmentNames).toEqual(expectedSegmentNames);
-            expect(spec.messageStructureDefinition).toContain(expectedBGMEntry);
-            expect(spec.messageStructureDefinition).toContain(expectedUNSEntry);
+            expect(spec.messageStructureDefinition).toContainEqual(expectedBGMEntry);
+            expect(spec.messageStructureDefinition).toContainEqual(expectedUNSEntry);
             const sg26: MessageType | undefined =
                 spec.messageStructureDefinition.find(item => item.name === 'Segment group 26');
             expect(sg26).toBeDefined();
-            expect((sg26 as any).content).toContain(expectedSegmentGroup27Entry);
+            expect((sg26 as any).content).toContainEqual(expectedSegmentGroup27Entry);
         });
 
         it("should correctly parse D99A APERAK structure page (no header section)", () => {
@@ -194,11 +194,11 @@ describe('UNECELegacyMessageStructureParser', () => {
 
             expect(segmentNames).toEqual(expectedSegmentNames);
 
-            expect(spec.messageStructureDefinition).toContain(expectedBGMEntry_APERAK);
+            expect(spec.messageStructureDefinition).toContainEqual(expectedBGMEntry_APERAK);
             const sg4: MessageType | undefined =
                 spec.messageStructureDefinition.find(item => item.name === 'Segment group 4');
             expect(sg4).toBeDefined();
-            expect((sg4 as any).content).toContain(expectedSegmentGroup5Entry);
+            expect((sg4 as any).content).toContainEqual(expectedSegmentGroup5Entry);
         });
 
         it("should correctly parse D96A ORDERS structure page", () => {
@@ -206,8 +206,8 @@ describe('UNECELegacyMessageStructureParser', () => {
                 new EdifactMessageSpecificationImpl('ORDERS', 'D', '96A', 'UN');
             sut.parseStructurePage(D96A_ORDERS_STRUCTURE_PAGE, spec);
 
-            expect(spec.messageStructureDefinition).toContain({ ...expectedBGMEntry, section: 'header' });
-            expect(spec.messageStructureDefinition).toContain(expectedUNSEntry);
+            expect(spec.messageStructureDefinition).toContainEqual({ ...expectedBGMEntry, section: 'header' });
+            expect(spec.messageStructureDefinition).toContainEqual(expectedUNSEntry);
             expect(spec.messageStructureDefinition[7]).toBeDefined();
             expect(spec.messageStructureDefinition[7].name).toBe('Segment group 1');
             expect(spec.messageStructureDefinition[8]).toBeDefined();
@@ -261,12 +261,12 @@ describe('UNECELegacyMessageStructureParser', () => {
                     const segments: Dictionary<SegmentEntry> = spec.segmentTable;
                     const elements: Dictionary<ElementEntry> = spec.elementTable;
 
-                    expect(segments.get("MEA")?.elements).toEqual(jasmine.arrayContaining(["6311", "C502", "C174", "7383"]));
+                    expect(segments.get("MEA")?.elements).toEqual(expect.arrayContaining(["6311", "C502", "C174", "7383"]));
                     expect(segments.get("MEA")?.requires).toEqual(1);
 
-                    expect(elements.get("6311")?.components).toEqual(jasmine.arrayContaining(["an..3"]));
+                    expect(elements.get("6311")?.components).toEqual(expect.arrayContaining(["an..3"]));
                     expect(elements.get("6311")?.requires).toEqual(1);
-                    expect(elements.get("C174")?.components).toEqual(jasmine.arrayContaining(["an..3", "an..18", "n..18", "n..18", "n..2"]));
+                    expect(elements.get("C174")?.components).toEqual(expect.arrayContaining(["an..3", "an..18", "n..18", "n..18", "n..2"]));
                     expect(elements.get("C174")?.requires).toEqual(1);
 
                     // sub-components should not be stored
@@ -316,11 +316,11 @@ describe('UNECELegacyMessageStructureParser', () => {
                     const segments: Dictionary<SegmentEntry> = spec.segmentTable;
                     const elements: Dictionary<ElementEntry> = spec.elementTable;
 
-                    expect(segments.get("CUX")?.elements).toEqual(jasmine.arrayContaining(["C504", "C504", "5402", "6341"]));
+                    expect(segments.get("CUX")?.elements).toEqual(expect.arrayContaining(["C504", "C504", "5402", "6341"]));
                     expect(segments.get("CUX")?.requires).toEqual(0);
 
                     expect(elements.get("C504")?.components.length).toEqual(4);
-                    expect(elements.get("C504")?.components).toEqual(jasmine.arrayContaining(["an..3", "an..3", "an..3", "n..4"]));
+                    expect(elements.get("C504")?.components).toEqual(expect.arrayContaining(["an..3", "an..3", "an..3", "n..4"]));
 
                     done();
                 });
@@ -330,7 +330,7 @@ describe('UNECELegacyMessageStructureParser', () => {
 
     describe('loadTypeSpec', () => {
 
-        it("should parse remote UNECE specification", async () => {
+        it.skip("should parse remote UNECE specification", async () => {
             const spec: EdifactMessageSpecification = await sut.loadTypeSpec();
             const segments: Dictionary<SegmentEntry> = spec.segmentTable;
             const elements: Dictionary<ElementEntry> = spec.elementTable;
@@ -342,30 +342,30 @@ describe('UNECELegacyMessageStructureParser', () => {
             expect(spec.messageType).toBe('INVOIC');
 
             // check segments
-            expect(segments.get("MEA")?.elements).toEqual(jasmine.arrayContaining(["6311", "C502", "C174", "7383"]));
+            expect(segments.get("MEA")?.elements).toEqual(expect.arrayContaining(["6311", "C502", "C174", "7383"]));
             expect(segments.get("MEA")?.requires).toEqual(1);
-            expect(segments.get("CUX")?.elements).toEqual(jasmine.arrayContaining(["C504", "C504", "5402", "6341"]));
+            expect(segments.get("CUX")?.elements).toEqual(expect.arrayContaining(["C504", "C504", "5402", "6341"]));
             expect(segments.get("CUX")?.requires).toEqual(0);
 
             // check elements
             // elements for segment MEA
-            expect(elements.get("6311")?.components).toEqual(jasmine.arrayContaining(["an..3"]));
+            expect(elements.get("6311")?.components).toEqual(expect.arrayContaining(["an..3"]));
             expect(elements.get("6311")?.requires).toEqual(1);
-            expect(elements.get("C174")?.components).toEqual(jasmine.arrayContaining(["an..3", "an..18", "n..18", "n..18", "n..2"]));
+            expect(elements.get("C174")?.components).toEqual(expect.arrayContaining(["an..3", "an..18", "n..18", "n..18", "n..2"]));
             expect(elements.get("C174")?.requires).toEqual(1);
             // elements for segment CUX
             expect(elements.get("C504")?.components.length).toEqual(4);
-            expect(elements.get("C504")?.components).toEqual(jasmine.arrayContaining(["an..3", "an..3", "an..3", "n..4"]));
+            expect(elements.get("C504")?.components).toEqual(expect.arrayContaining(["an..3", "an..3", "an..3", "n..4"]));
             // sub-components should not be stored
             expect(elements.get("6411")).toBeUndefined();
 
             // check message structure
-            expect(spec.messageStructureDefinition).toContain(expectedBGMEntry);
-            expect(spec.messageStructureDefinition).toContain(expectedUNSEntry);
+            expect(spec.messageStructureDefinition).toContainEqual(expectedBGMEntry);
+            expect(spec.messageStructureDefinition).toContainEqual(expectedUNSEntry);
             const sg26: MessageType | undefined =
                 spec.messageStructureDefinition.find(item => item.name === 'Segment group 26');
             expect(sg26).toBeDefined();
-            expect((sg26 as any).content).toContain(expectedSegmentGroup27Entry);
+            expect((sg26 as any).content).toContainEqual(expectedSegmentGroup27Entry);
         });
 
     });

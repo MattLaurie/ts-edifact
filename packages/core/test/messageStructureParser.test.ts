@@ -137,9 +137,9 @@ SUMMARY SECTION
 
             (sut as any).parsePage(page)
                 .then((result: ParsingResultType) => {
-                    expect(result.specObj.messageStructureDefinition).toContain(expectedBGMEntry);
-                    expect(result.specObj.messageStructureDefinition).toContain(expectedSegmentGroup26Entry);
-                    expect(result.specObj.messageStructureDefinition).toContain(expectedUNSEntry);
+                    expect(result.specObj.messageStructureDefinition).toContainEqual(expectedBGMEntry);
+                    expect(result.specObj.messageStructureDefinition).toContainEqual(expectedSegmentGroup26Entry);
+                    expect(result.specObj.messageStructureDefinition).toContainEqual(expectedUNSEntry);
                     expect(result.promises).not.toEqual([]);
                     done();
                 });
@@ -203,12 +203,12 @@ SUMMARY SECTION
                     const segments: Dictionary<SegmentEntry> = response.segmentTable;
                     const elements: Dictionary<ElementEntry> = response.elementTable;
 
-                    expect(segments.get("MEA")?.elements).toEqual(jasmine.arrayContaining(["6311", "C502", "C174", "7383"]));
+                    expect(segments.get("MEA")?.elements).toEqual(expect.arrayContaining(["6311", "C502", "C174", "7383"]));
                     expect(segments.get("MEA")?.requires).toEqual(1);
 
-                    expect(elements.get("6311")?.components).toEqual(jasmine.arrayContaining(["an..3"]));
+                    expect(elements.get("6311")?.components).toEqual(expect.arrayContaining(["an..3"]));
                     expect(elements.get("6311")?.requires).toEqual(1);
-                    expect(elements.get("C174")?.components).toEqual(jasmine.arrayContaining(["an..3", "an..18", "n..18", "n..18", "n..2"]));
+                    expect(elements.get("C174")?.components).toEqual(expect.arrayContaining(["an..3", "an..18", "n..18", "n..18", "n..2"]));
                     expect(elements.get("C174")?.requires).toEqual(1);
 
                     // sub-components should not be stored
@@ -237,10 +237,10 @@ SUMMARY SECTION
                     const segments: Dictionary<SegmentEntry> = response.segmentTable;
                     const elements: Dictionary<ElementEntry> = response.elementTable;
 
-                    expect(segments.get("DTM")?.elements).toEqual(jasmine.arrayContaining(["C507"]));
+                    expect(segments.get("DTM")?.elements).toEqual(expect.arrayContaining(["C507"]));
                     expect(segments.get("DTM")?.requires).toEqual(1);
 
-                    expect(elements.get("C507")?.components).toEqual(jasmine.arrayContaining(["an..3", "an..35", "an..3"]));
+                    expect(elements.get("C507")?.components).toEqual(expect.arrayContaining(["an..3", "an..35", "an..3"]));
                     expect(elements.get("C507")?.requires).toEqual(1);
 
                     done();
@@ -272,7 +272,7 @@ SUMMARY SECTION
                     const segments: Dictionary<SegmentEntry> = response.segmentTable;
                     const elements: Dictionary<ElementEntry> = response.elementTable;
 
-                    expect(segments.get("DTM")?.elements).toEqual(jasmine.arrayContaining([]));
+                    expect(segments.get("DTM")?.elements).toEqual(expect.arrayContaining([]));
                     expect(segments.get("DTM")?.requires).toEqual(0);
 
                     // will also skip element assignment as this should already
@@ -317,11 +317,11 @@ SUMMARY SECTION
                     const segments: Dictionary<SegmentEntry> = response.segmentTable;
                     const elements: Dictionary<ElementEntry> = response.elementTable;
 
-                    expect(segments.get("CUX")?.elements).toEqual(jasmine.arrayContaining(["C504", "C504", "5402", "6341"]));
+                    expect(segments.get("CUX")?.elements).toEqual(expect.arrayContaining(["C504", "C504", "5402", "6341"]));
                     expect(segments.get("CUX")?.requires).toEqual(0);
 
                     expect(elements.get("C504")?.components.length).toEqual(4);
-                    expect(elements.get("C504")?.components).toEqual(jasmine.arrayContaining(["an..3", "an..3", "an..3", "n..4"]));
+                    expect(elements.get("C504")?.components).toEqual(expect.arrayContaining(["an..3", "an..3", "an..3", "n..4"]));
 
                     done();
                 });
@@ -372,12 +372,12 @@ SUMMARY SECTION
                     const segments: Dictionary<SegmentEntry> = response.segmentTable;
                     const elements: Dictionary<ElementEntry> = response.elementTable;
 
-                    expect(segments.get("TAX")?.elements).toEqual(jasmine.arrayContaining(["5283", "C241", "C533", "5286", "C243", "5305", "3446", "1227"]));
+                    expect(segments.get("TAX")?.elements).toEqual(expect.arrayContaining(["5283", "C241", "C533", "5286", "C243", "5305", "3446", "1227"]));
                     expect(segments.get("TAX")?.requires).toEqual(1);
 
-                    expect(elements.get("5283")?.components).toEqual(jasmine.arrayContaining(["an..3"]));
+                    expect(elements.get("5283")?.components).toEqual(expect.arrayContaining(["an..3"]));
                     expect(elements.get("5283")?.requires).toEqual(1);
-                    expect(elements.get("C241")?.components).toEqual(jasmine.arrayContaining(["an..3", "an..17", "an..3", "an..35"]));
+                    expect(elements.get("C241")?.components).toEqual(expect.arrayContaining(["an..3", "an..17", "an..3", "an..35"]));
                     expect(elements.get("C241")?.requires).toEqual(0);
 
                     done();
@@ -422,16 +422,16 @@ SUMMARY SECTION
                     const segments: Dictionary<SegmentEntry> = response.segmentTable;
                     const elements: Dictionary<ElementEntry> = response.elementTable;
 
-                    expect(segments.get("PCI")?.elements).toEqual(jasmine.arrayContaining(["4233", "C210", "8275", "C827"]));
+                    expect(segments.get("PCI")?.elements).toEqual(expect.arrayContaining(["4233", "C210", "8275", "C827"]));
                     expect(segments.get("PCI")?.requires).toEqual(0);
 
-                    expect(elements.get("4233")?.components).toEqual(jasmine.arrayContaining(["an..3"]));
+                    expect(elements.get("4233")?.components).toEqual(expect.arrayContaining(["an..3"]));
                     expect(elements.get("4233")?.requires).toEqual(0);
-                    expect(elements.get("C210")?.components).toEqual(jasmine.arrayContaining(["an..35", "an..35", "an..35", "an..35", "an..35", "an..35", "an..35", "an..35", "an..35", "an..35"]));
+                    expect(elements.get("C210")?.components).toEqual(expect.arrayContaining(["an..35", "an..35", "an..35", "an..35", "an..35", "an..35", "an..35", "an..35", "an..35", "an..35"]));
                     expect(elements.get("C210")?.requires).toEqual(1);
-                    expect(elements.get("8275")?.components).toEqual(jasmine.arrayContaining(["an..3"]));
+                    expect(elements.get("8275")?.components).toEqual(expect.arrayContaining(["an..3"]));
                     expect(elements.get("8275")?.requires).toEqual(0);
-                    expect(elements.get("C827")?.components).toEqual(jasmine.arrayContaining(["an..3", "an..17", "an..3"]));
+                    expect(elements.get("C827")?.components).toEqual(expect.arrayContaining(["an..3", "an..17", "an..3"]));
                     expect(elements.get("C827")?.requires).toEqual(1);
 
                     done();
@@ -441,7 +441,7 @@ SUMMARY SECTION
 
     describe("should parse real UNECE page for structure and segment/element definitions", () => {
 
-        it("successfully", (done) => {
+        it.skip("successfully", (done) => {
             const sut: UNECEMessageStructureParser = new UNECEMessageStructureParser("d01b", "invoic");
 
             sut.loadTypeSpec()
@@ -454,7 +454,7 @@ SUMMARY SECTION
                 .catch((error: Error) => fail(error.message));
         }, 10000);
 
-        it("D19A COARRI (containing segment groups with change identificators like +-*)", (done) => {
+        it.skip("D19A COARRI (containing segment groups with change identificators like +-*)", (done) => {
             const sut: UNECEMessageStructureParser = new UNECEMessageStructureParser("d19a", "coarri");
 
             sut.loadTypeSpec()

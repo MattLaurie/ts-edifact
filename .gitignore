@@ -1,9 +1,5 @@
-/lib
-dist
 node_modules
-.vscode-test/
-*.vsix
-.nyc_output
 coverage
-package-lock.json
-*.code-workspace
+dist
+*.tsbuildinfo
+.idea
