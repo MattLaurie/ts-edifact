@@ -16,8 +16,7 @@
  * limitations under the License.
  */
 
-import { Dictionary, SegmentEntry, ElementEntry } from "../validator";
-import { MessageType } from "../tracker";
+import { Dictionary, SegmentEntry, ElementEntry, MessageType } from "@ts-edifact/core";
 import { HttpClient } from "../httpClient";
 import { Parser, DomHandler } from "htmlparser2";
 import { isDefined } from "../util";

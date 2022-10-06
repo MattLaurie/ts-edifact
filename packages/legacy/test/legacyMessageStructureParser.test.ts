@@ -22,11 +22,10 @@
 
 import { readFileSync } from "fs";
 import { join } from "path";
+import { Dictionary, MessageType, ElementEntry, SegmentEntry } from "@ts-edifact/core";
 
 import { UNECELegacyMessageStructureParser } from "../src/edi/legacyMessageStructureParser";
 import { EdifactMessageSpecificationImpl, EdifactMessageSpecification } from "../src/edi/messageStructureParser";
-import { MessageType } from "../src/tracker";
-import { Dictionary, ElementEntry, SegmentEntry } from "../src/validator";
 
 const D99A_INVOIC_METADATA_PAGE: string = `
 <HTML><PRE><body bgcolor=ffffff><TITLE>UNTDID - D.99A - Message INVOIC</title>

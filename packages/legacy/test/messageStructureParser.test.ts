@@ -21,9 +21,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
 import { UNECEMessageStructureParser, EdifactMessageSpecification, ParsingResultType } from "../src/edi/messageStructureParser";
-import { Dictionary, SegmentEntry, ElementEntry } from "../src/validator";
-import { MessageType } from "../src/tracker";
-// import { persist } from "../src/util";
+import { Dictionary, SegmentEntry, ElementEntry, MessageType } from "@ts-edifact/core";
 
 describe("MessageStructureParser", () => {
 

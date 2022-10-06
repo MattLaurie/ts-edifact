@@ -17,8 +17,8 @@
  */
 
 import { StateMachineDefinition } from "@initics/tsm";
+import { MessageType } from "@ts-edifact/core";
 import { UNECEDomHandler } from "./uneceDomHandler";
-import { MessageType } from "../tracker";
 
 import { EdifactMessageSpecification } from "./messageStructureParser";
 import { UNECEPageParser } from "./unecePageParser";

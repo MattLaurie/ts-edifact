@@ -16,12 +16,25 @@
  * limitations under the License.
  */
 
-import { ResultType } from "./reader";
-import { MessageType, Pointer } from "./tracker";
 import * as fs from "fs";
-import { MessageHeader, Segment, toSegmentObject } from "./edifact";
-import { Separators } from "./edi/separators";
-import { APERAK, AUTHOR, BALANC, DESADV, GENRAL, IFTMIN, INVOIC, INVRPT, ORDERS, OSTENQ, OSTRPT, PARTIN, TAXCON, VATDEC } from "./index";
+import { ResultType, MessageType, Pointer, MessageHeader, Segment, toSegmentObject, Separators } from "@ts-edifact/core";
+
+// default D01B message specifications
+
+import * as APERAK from "./messageSpec/APERAK.struct.json";
+import * as AUTHOR from "./messageSpec/AUTHOR.struct.json";
+import * as BALANC from "./messageSpec/BALANC.struct.json";
+import * as DESADV from "./messageSpec/DESADV.struct.json";
+import * as GENRAL from "./messageSpec/GENRAL.struct.json";
+import * as IFTMIN from "./messageSpec/IFTMIN.struct.json";
+import * as INVOIC from "./messageSpec/INVOIC.struct.json";
+import * as INVRPT from "./messageSpec/INVRPT.struct.json";
+import * as ORDERS from "./messageSpec/ORDERS.struct.json";
+import * as OSTENQ from "./messageSpec/OSTENQ.struct.json";
+import * as OSTRPT from "./messageSpec/OSTRPT.struct.json";
+import * as PARTIN from "./messageSpec/PARTIN.struct.json";
+import * as TAXCON from "./messageSpec/TAXCON.struct.json";
+import * as VATDEC from "./messageSpec/VATDEC.struct.json";
 
 export class Group {
     name: string;

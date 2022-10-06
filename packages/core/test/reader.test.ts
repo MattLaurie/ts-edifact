@@ -15,8 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as fs from "fs";
+import * as path from "path";
 
 import { Reader, ResultType } from "../src/reader";
+
+const MESSAGE_SPEC_DIR = path.resolve(__dirname, "data");
 
 describe("Edifact Reader", () => {
 
@@ -52,7 +56,7 @@ describe("Edifact Reader", () => {
         document += "UNT+23+00000000000117'";
         document += "UNZ+1+00000000000778'";
 
-        const sut: Reader = new Reader("./src/messageSpec");
+        const sut: Reader = new Reader(MESSAGE_SPEC_DIR);
 
         const parsingResult: ResultType[] = sut.parse(document);
 
@@ -61,7 +65,7 @@ describe("Edifact Reader", () => {
     });
 
     it("should read document with reported issues", () => {
-        const sut: Reader = new Reader("./src/messageSpec");
+        const sut: Reader = new Reader(MESSAGE_SPEC_DIR);
 
         let doc: string = "";
         doc += "UNA:+.? '";

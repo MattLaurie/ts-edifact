@@ -16,11 +16,15 @@
  * limitations under the License.
  */
 
+import * as fs from "fs";
+import * as path from "path";
 import { Dictionary, SegmentEntry, ElementEntry } from "../src/validator";
 import { Parser } from "../src/parser";
 import { SegmentTableBuilder } from "../src/segments";
 import { ElementTableBuilder } from "../src/elements";
 import { Configuration } from "../src/configuration";
+
+const MESSAGE_SPEC_DIR = path.resolve(__dirname, "data");
 
 // issue #1 - Differences between ts-edifact and edifact libraries
 describe("Parsing edifact document", () => {
@@ -30,9 +34,9 @@ describe("Parsing edifact document", () => {
 
         it("should parse original sample document", () => {
             const segments: Dictionary<SegmentEntry> =
-                new SegmentTableBuilder("INVOIC").specLocation("./src/messageSpec").build();
+                new SegmentTableBuilder("INVOIC").specLocation(MESSAGE_SPEC_DIR).build();
             const elements: Dictionary<ElementEntry> =
-                new ElementTableBuilder("INVOIC").specLocation("./src/messageSpec").build();
+                new ElementTableBuilder("INVOIC").specLocation(MESSAGE_SPEC_DIR).build();
 
             const config: Configuration = new Configuration();
             config.validator.define(segments);
@@ -75,9 +79,9 @@ describe("Parsing edifact document", () => {
         it("should parse issue #1 document", () => {
 
             const segments: Dictionary<SegmentEntry> =
-            new SegmentTableBuilder("IFTMIN").specLocation("./src/messageSpec").build();
+            new SegmentTableBuilder("IFTMIN").specLocation(MESSAGE_SPEC_DIR).build();
             const elements: Dictionary<ElementEntry> =
-                new ElementTableBuilder("IFTMIN").specLocation("./src/messageSpec").build();
+                new ElementTableBuilder("IFTMIN").specLocation(MESSAGE_SPEC_DIR).build();
 
             const config: Configuration = new Configuration();
             config.validator.define(segments);
