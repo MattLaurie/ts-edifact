@@ -18,7 +18,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { Reader, ResultType } from "../src/reader";
+import {Reader, ResultType} from "../src/reader";
 
 const MESSAGE_SPEC_DIR = path.resolve(__dirname, "data");
 
@@ -131,4 +131,199 @@ describe("Edifact Reader", () => {
 
         expect(parsingResult.length).toEqual(57);
     });
+
+    it('should parse CUSREP file', () => {
+        let doc = "";
+        doc += "UNA:+,? '";
+        doc += "UNB+UNOC:3+AAA676Y::AAA676Y+AAA336C+040127:0830+200401270013++++1++1'";
+        doc += "UNH+1+CUSREP:D:99B:UN'";
+        doc += "BGM+124:::DEPART+200401270013:1+9'";
+        doc += "DTM+136:20040127:102'";
+        doc += "DTM+136:0700:401'";
+        doc += "LOC+5+9053M::95'";
+        doc += "TDT+20+001++11+ABC123::95+++5000201::11'";
+        doc += "LOC+8+NZAKL::6'";
+        doc += "UNT+8+1'";
+        doc += "UNZ+1+200401270013'";
+        const sut = new Reader(MESSAGE_SPEC_DIR);
+        const result = sut.parse(doc);
+        console.log(JSON.stringify(result, null, 2));
+        expect(result).toStrictEqual([
+            {
+                "name": "UNB",
+                "elements": [
+                    [
+                        "UNOC",
+                        "3"
+                    ],
+                    [
+                        "AAA676Y",
+                        "",
+                        "AAA676Y"
+                    ],
+                    [
+                        "AAA336C"
+                    ],
+                    [
+                        "040127",
+                        "0830"
+                    ],
+                    [
+                        "200401270013"
+                    ],
+                    [
+                        ""
+                    ],
+                    [
+                        ""
+                    ],
+                    [
+                        ""
+                    ],
+                    [
+                        "1"
+                    ],
+                    [
+                        ""
+                    ],
+                    [
+                        "1"
+                    ]
+                ]
+            },
+            {
+                "name": "UNH",
+                "elements": [
+                    [
+                        "1"
+                    ],
+                    [
+                        "CUSREP",
+                        "D",
+                        "99B",
+                        "UN"
+                    ]
+                ]
+            },
+            {
+                "name": "BGM",
+                "elements": [
+                    [
+                        "124",
+                        "",
+                        "",
+                        "DEPART"
+                    ],
+                    [
+                        "200401270013",
+                        "1"
+                    ],
+                    [
+                        "9"
+                    ]
+                ]
+            },
+            {
+                "name": "DTM",
+                "elements": [
+                    [
+                        "136",
+                        "20040127",
+                        "102"
+                    ]
+                ]
+            },
+            {
+                "name": "DTM",
+                "elements": [
+                    [
+                        "136",
+                        "0700",
+                        "401"
+                    ]
+                ]
+            },
+            {
+                "name": "LOC",
+                "elements": [
+                    [
+                        "5"
+                    ],
+                    [
+                        "9053M",
+                        "",
+                        "95"
+                    ]
+                ]
+            },
+            {
+                "name": "TDT",
+                "elements": [
+                    [
+                        "20"
+                    ],
+                    [
+                        "001"
+                    ],
+                    [
+                        ""
+                    ],
+                    [
+                        "11"
+                    ],
+                    [
+                        "ABC123",
+                        "",
+                        "95"
+                    ],
+                    [
+                        ""
+                    ],
+                    [
+                        ""
+                    ],
+                    [
+                        "5000201",
+                        "",
+                        "11"
+                    ]
+                ]
+            },
+            {
+                "name": "LOC",
+                "elements": [
+                    [
+                        "8"
+                    ],
+                    [
+                        "NZAKL",
+                        "",
+                        "6"
+                    ]
+                ]
+            },
+            {
+                "name": "UNT",
+                "elements": [
+                    [
+                        "8"
+                    ],
+                    [
+                        "1"
+                    ]
+                ]
+            },
+            {
+                "name": "UNZ",
+                "elements": [
+                    [
+                        "1"
+                    ],
+                    [
+                        "200401270013"
+                    ]
+                ]
+            }
+        ]);
+    })
 });

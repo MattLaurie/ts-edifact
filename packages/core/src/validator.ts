@@ -100,6 +100,34 @@ export enum ValidatorStates {
     ENABLE = 5,
 }
 
+function describe(state: ValidatorStates): string {
+    let desc;
+    switch (state) {
+        case ValidatorStates.NONE:
+            desc = 'NONE';
+            break;
+        case ValidatorStates.SEGMENTS:
+            desc = 'SEGMENTS';
+            break;
+        case ValidatorStates.ELEMENTS:
+            desc = 'ELEMENTS';
+            break;
+        case ValidatorStates.ALL:
+            desc = 'ALL';
+            break;
+        case ValidatorStates.ENTER:
+            desc = 'ENTER';
+            break;
+        case ValidatorStates.ENABLE:
+            desc = 'ENABLE';
+            break;
+        default:
+            desc = 'Unknown';
+            break;
+    }
+    return `state=${desc}`;
+}
+
 export interface Validator {
     onOpenSegment(segment: string): void;
     onElement(): void;
@@ -233,6 +261,8 @@ export class ValidatorImpl implements Validator {
     }
 
     onOpenSegment(segment: string): void {
+        console.log(`XXX onOpenSegment: start: segment ${segment}`, this.counts, describe(this.state));
+
         switch (this.state) {
             case ValidatorStates.ALL:
             case ValidatorStates.ELEMENTS:
@@ -256,6 +286,8 @@ export class ValidatorImpl implements Validator {
     }
 
     onElement(): void {
+        console.log(`XXX onElement: start`, this.counts, describe(this.state));
+
         let name: string;
 
         switch (this.state) {
@@ -268,10 +300,21 @@ export class ValidatorImpl implements Validator {
                         return;
                     }
                 }
-                name = this.segment.elements[this.counts.element];
+                console.log(`XXX onElement: segment`, this.segment);
+                name = this.segment.elements[this.counts.element - 1];
                 if (this.element === undefined) {
                     throw this.errors.missingElementStart(name);
                 }
+
+                console.log(`XXX onElement: name`, name);
+
+                console.log(`XXX onElement: element`, this.element);
+
+                console.log(`XXX onElement: blah`, {
+                    required: this.required,
+                    minimum: this.minimum,
+                    maximum: this.maximum
+                })
 
                 // Check component of the previous enter
                 if (this.counts.component < this.element.requires || this.counts.component > this.element.components.length) {
@@ -313,6 +356,8 @@ export class ValidatorImpl implements Validator {
      * alphanumeric with their corresponding methods.
      */
     onOpenComponent(buffer: Tokenizer): void {
+        console.log(`XXX onOpenComponent: start: buffer="${buffer.content()}"`, this.counts, describe(this.state));
+
         if (this.segment === undefined) {
             const error: Error | undefined = this.errors.missingSegmentStart(undefined, this.throwOnMissingDefinitions);
             if (error) {
@@ -325,19 +370,31 @@ export class ValidatorImpl implements Validator {
         switch (this.state) {
             case ValidatorStates.ALL:
                 // eslint-disable-next-line no-case-declarations
-                const name: string = this.segment.elements[this.counts.element];
+                const name: string = this.segment.elements[this.counts.element - 1];
                 if (this.element === undefined) {
                     throw this.errors.missingElementStart(name);
                 }
 
+                console.log(`XXX onOpenComponent: name`, name);
+                console.log(`XXX onOpenComponent: element`, this.element);
+
                 // Retrieve a component definition if validation is set to all
                 this.component = this.format(this.element.components[this.counts.component]);
                 if (this.component === undefined) {
+                    console.log(`XXX no component found for "${this.element.components[this.counts.component]}"`)
                     return;
                 }
+
                 this.required = this.element.requires;
                 this.minimum = this.component.minimum;
                 this.maximum = this.component.maximum;
+
+                console.log(`XXX onOpenComponent: blah changed`, {
+                    required: this.required,
+                    minimum: this.minimum,
+                    maximum: this.maximum
+                })
+
                 // Set the corresponding buffer mode
                 if (this.component.alpha) {
                     if (this.component.numeric) {
@@ -361,6 +418,14 @@ export class ValidatorImpl implements Validator {
     }
 
     onCloseComponent(buffer: Tokenizer): void {
+        console.log(`XXX onCloseComponent: start: buffer "${buffer.content()}"`, this.counts, describe(this.state));
+
+        console.log(`XXX onCloseComponent: blah`, {
+            required: this.required,
+            minimum: this.minimum,
+            maximum: this.maximum
+        })
+
         let length: number;
 
         switch (this.state) {
@@ -380,6 +445,16 @@ export class ValidatorImpl implements Validator {
                     }
                 }
 
+                console.log(`XXX onCloseComponent: segment`, this.segment);
+
+                console.log(`XXX onCloseComponent: something`, {
+                   length,
+                   name,
+                   required: this.required,
+                   counts_component: this.counts.component
+                });
+
+
                 // We perform validation if either the required component count is greater than
                 // or equal to the current component count or if a non-empty value was found
                 if (this.required >= this.counts.component || length > 0) {
@@ -396,6 +471,8 @@ export class ValidatorImpl implements Validator {
      * @summary Finish validation for the current segment.
      */
     onCloseSegment(segment: string): void {
+        console.log(`XXX onCloseSegment: start: segment "${segment}"`, this.counts, describe(this.state));
+
         let name: string;
 
         switch (this.state) {

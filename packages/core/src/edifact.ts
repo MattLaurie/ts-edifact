@@ -56,6 +56,76 @@ export class CustomsStatusOfGoods implements Segment {
     }
 }
 
+// CNI+LINE NUMBER+:::I'
+
+type DocumentMessageDetails = {
+    documentMessageNumber: string;
+    documentStatusCode: string;
+    documentMessageSource: string;
+    languageNameCode: string;
+    version: string;
+    revisionNumber: string;
+}
+
+export class ConsignmentInformation implements Segment {
+    tag = 'CNI';
+
+    consolidatedItemNumber: number;
+    documentMessageDetails?: DocumentMessageDetails;
+    consignmentLoadSequenceNumber?: number;
+
+    constructor(data: ResultType) {
+        this.consolidatedItemNumber = parseInt(data.elements[0][0]);
+        if (data.elements.length > 1) {
+            this.documentMessageDetails = {
+                documentMessageNumber: data.elements[1][0],
+                documentStatusCode: data.elements[1][1],
+                documentMessageSource: data.elements[1][2],
+                languageNameCode: data.elements[1][3],
+                version: data.elements[1][4],
+                revisionNumber: data.elements[1][5]
+            }
+        }
+        if (data.elements.length > 2) {
+            this.consignmentLoadSequenceNumber = parseInt(data.elements[2][0]);
+        }
+    }
+}
+
+// GID+1'
+
+type NumberAndTypeOfPackages = {
+    numberOfPackages: number;
+    packageTypeDescriptionCode: string;
+    codeListIdentificationCode: string;
+    codeListResponsibleAgencyCode: string;
+    typeOfPackages: string;
+    packagingRelatedDescriptionCode: string;
+}
+
+export class GoodsItemDetails implements Segment {
+    tag = 'GID';
+
+    goodsItemNumber: number;
+    numberAndTypeOfPackages: NumberAndTypeOfPackages[] = [];
+
+    constructor(data: ResultType) {
+        this.goodsItemNumber = parseInt(data.elements[0][0]);
+        if (data.elements.length > 1) {
+            for (let i = 1; i < data.elements.length; i++) {
+                this.numberAndTypeOfPackages.push({
+                    numberOfPackages: parseInt(data.elements[i][0]),
+                    packageTypeDescriptionCode: data.elements[i][1],
+                    codeListIdentificationCode: data.elements[i][2],
+                    codeListResponsibleAgencyCode: data.elements[i][3],
+                    typeOfPackages: data.elements[i][4],
+                    packagingRelatedDescriptionCode: data.elements[i][5]
+                });
+            }
+        }
+    }
+}
+
 export function toSegmentObject(data: ResultType, version: string, decimalSeparator: string): Segment {
     switch (data.name) {
         case "AJT":
@@ -80,16 +150,18 @@ export function toSegmentObject(data: ResultType, version: string, decimalSepara
             return new CharacteristicClassID(data);
         case "CED":
             return new ComputerEnvironmentDetails(data);
+        case "CNI":
+            return new ConsignmentInformation(data);
         case "CNT":
             return new ControlTotal(data, decimalSeparator);
         case "COD":
             return new ComponentDetails(data);
         case "COM":
             return new CommunicationContact(data);
-        case "CST":
-            return new CustomsStatusOfGoods(data);
         case "CPS":
             return new ConsignmentPackingSequence(data);
+        case "CST":
+            return new CustomsStatusOfGoods(data);
         case "CTA":
             return new ContactInformation(data);
         case "CUX":
@@ -118,6 +190,8 @@ export function toSegmentObject(data: ResultType, version: string, decimalSepara
             return new FreeText(data);
         case "GEI":
             return new ProcessingInformation(data);
+        case "GID":
+            return new GoodsItemDetails(data);
         case "GIN":
             return new GoodsIdentityNumber(data);
         case "GIR":

@@ -360,7 +360,7 @@ export class InterchangeBuilder {
                 current = new Pointer(current.content() as MessageType[], 0);
                 this.stack.push(current);
             } else {
-                // Check if we ware omitting mandatory content
+                // Check if we are omitting mandatory content
                 if (current.mandatory() && current.count === 0) {
                     if (optionals.length === 0) {
                         const segName: string | undefined = current.name();
@@ -433,7 +433,7 @@ export class InterchangeBuilder {
                         const group: Group | undefined = curObj.groupByName(groupName);
                         if (group) {
                             curObj = group;
-                            // check wheter the stack count is larger than 1, if so, we know that
+                            // check whether the stack count is larger than 1, if so, we know that
                             // there is a repetition going on, which we would like to put into
                             // their own subgroups.
                             if (pointer.count > 1) {
